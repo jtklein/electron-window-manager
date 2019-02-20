@@ -249,55 +249,7 @@
      * */
     Window.prototype.loadURL = function(url, options){
         // Ready the url
-        url = utils.readyURL(url || this.setup.url);
-
-        var instance = this,
-            layout = this.setup.layout !== false
-                ?(this.setup.layout || windowManager.config.defaultLayout) :false;
-
-        // If a layout is specified
-        var layoutFile = layouts.get(layout);
-        if(layout && !layoutFile){
-            console.log('The layout "' + layout +'" wasn\'t found!');
-        }
-
-        if(layout && layoutFile && url.substring(0, 4) != 'http'){
-            url = url.replace('file://', '');
-
-            // Load the the layout first
-            FileSystem.readFile(layoutFile, 'utf-8', function(error, layoutCode){
-                if(error){
-                    console.log('Couldn\'t load the layout file: ' + layoutFile);
-
-                    // Take the page down!
-                    instance.down();
-
-                    return false;
-                }
-
-                // Load the targeted file body
-                FileSystem.readFile(url, 'utf-8', function(error, content){
-                    if(error){
-                        console.log('Can not find the he targeted page :' + url);
-
-                        // Take the page down!
-                        instance.down();
-
-                        return false;
-                    }
-
-                    // Get the final body
-                    content = layoutCode.replace('{{content}}', content);
-
-                    // Load the final output
-                    instance.html(content, options);
-                });
-            });
-
-        }else{
-            // Load the passed url
-            instance.content().loadURL(url, options);
-        }
+        this.object.loadURL(url, options);
     };
 
     /**
