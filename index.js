@@ -296,7 +296,7 @@
 
         }else{
             // Load the passed url
-            instance.content().loadURL(url, options);
+            this.object.loadURL(url, options);
         }
     };
 
